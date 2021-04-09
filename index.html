@@ -5,10 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TV Show Project |Rodrigue Ndzana (RodrigueNdzana)</title>  <link href="style.css" rel="stylesheet" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> 
   </head>
 
-  <body>
+  <body id="theBodyOfThePage">
+    <!-- search bar -->
+    <div class="searchdiv">
+      <input type="text" id="searchbar" class="input" placeholder="Search Series" />
+      <div class="searchbtn">
+        <i class="fa fa-search" aria-hidden="true"></i>
+      </div>
+      <select name="select Series" id="selectingSeries" value="Select Series">
+        <option>Select Series</option>
+      </select>
+    </div>
     <div id="root">
+      
+
     </div>
 
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->

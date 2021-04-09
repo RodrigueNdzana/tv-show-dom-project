@@ -1,3 +1,83 @@
+*{
+  margin: 0;
+  padding: 0;
+}
 #root {
-  color: red;
+  display: flex;
+  width: 93%;
+  flex-wrap: wrap;
+  margin: auto;
+  padding-bottom: 3rem;
+}
+/* .imageContainer{
+  margin-right: 53px;
+  background: aqua;
+  padding: 3rem;
+  margin-top: 6rem;
+} */
+.card{
+  margin-right: 53px;
+  background: whitesmoke;
+  padding: 3rem;
+  margin-top: 6rem;
+  width: 14rem;
+  box-shadow: 0px 0px 4px 5px grey;
+}
+.imageContainer img{
+  width: 100%;
+}
+#headingContainer {
+  border: 3px solid black;
+    padding: 1rem;
+    font-size: 13px;
+    margin-top: -3rem;
+    display: flex;
+    margin-bottom: 3rem;
+    width: 17.7rem;
+    margin-left: -3rem;
+}
+#headingContainer h2{
+  margin: auto;
+}
+
+footer{
+  background-color: #212121;
+  color: white;
+  padding: 3rem;
+  text-align: center;
+}
+/* search bar */
+.searchdiv {
+  
+    margin-top: 5%;
+    margin-left: 21%;
+    max-width: 700px;
+    width: 100%;
+    padding: 15px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: space-between;
+}
+.searchdiv .input {
+  width: 85%;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+.searchbtn {
+  background: #030431;
+  width: 10%;
+  border-radius: 5px;
+  position: relative;
+  cursor: pointer;
+}
+.searchbtn .fa {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+  color: white;
 }
