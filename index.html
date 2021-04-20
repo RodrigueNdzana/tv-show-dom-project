@@ -10,13 +10,13 @@
 
   <body id="theBodyOfThePage">
     <!-- search bar -->
-    <div class="searchdiv">
+    <div class="searchDiv">
       <input type="text" id="searchbar" class="input" placeholder="Search Series" />
-      <div class="searchbtn">
-        <i class="fa fa-search" aria-hidden="true"></i>
+      <div class="display">
+        <p id="displayNumberOfEpisodes"></p>
       </div>
-      <select name="select Series" id="selectingSeries" value="Select Series">
-        <option>Select Series</option>
+      <select value="select Series" id="selectingSeries">
+        <option value="allSeries" id="defaultSeries">Select Series</option>
       </select>
     </div>
     <div id="root">

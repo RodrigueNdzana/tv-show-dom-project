@@ -4,7 +4,7 @@
 }
 #root {
   display: flex;
-  width: 93%;
+  width: 94%;
   flex-wrap: wrap;
   margin: auto;
   padding-bottom: 3rem;
@@ -46,8 +46,11 @@ footer{
   padding: 3rem;
   text-align: center;
 }
+.hidden{
+  display:none;
+}
 /* search bar */
-.searchdiv {
+.searchDiv{
   
     margin-top: 5%;
     margin-left: 21%;
@@ -59,25 +62,22 @@ footer{
     display: flex;
     justify-content: space-between;
 }
-.searchdiv .input {
-  width: 85%;
+.searchDiv select {
+  width: 55%;;
   padding: 15px 20px;
   border: none;
   border-radius: 5px;
   font-weight: bold;
 }
-.searchbtn {
+.searchDiv input{
+  width: 55%;
+}
+.display
+ {
   background: #030431;
-  width: 10%;
+  width: 22%;
   border-radius: 5px;
   position: relative;
-  cursor: pointer;
-}
-.searchbtn .fa {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 1.2rem;
+  padding: 4px 9px;
   color: white;
 }
