@@ -12,11 +12,14 @@
     <!-- search bar -->
     <div class="searchDiv">
       <input type="text" id="searchbar" class="input" placeholder="Search Series" />
-      <div class="display">
+      <!-- <div class="display">
         <p id="displayNumberOfEpisodes"></p>
-      </div>
+      </div> -->
       <select value="select Series" id="selectingSeries">
         <option value="allSeries" id="defaultSeries">Select Series</option>
+      </select>
+      <select value="select Show" id="selectingShow">
+        <option value="allShows" id="defaultShow">Select Show</option>
       </select>
     </div>
     <div id="root">
@@ -26,7 +29,7 @@
 
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
     <script src="episodes.js"></script>
-
+<script src="shows.js"></script>
     <!-- Loads YOUR javascript code -->
     <script src="script.js"></script>
   </body>
