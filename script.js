@@ -1,23 +1,22 @@
 //You can edit ALL of the code here
 // Global variable 
-
-const allEpisodes = getAllEpisodes();
-let getShows = getAllShows();
+const allEpisodes = getAllEpisodes(); // this is the defaut episode function to be display when the page it load 
+let getShows = getAllShows();     // This is the function that should be call (API) when we click the "select Show" with the id "selectingShow"
 let accessTheCount = document.getElementById("displayNumberOfEpisodes");
 const rootElem = document.getElementById("root");
 
-//setupfunction to be display when the page is load
+// this is the function that would load my HTML page, 
 async function setup() {
-  makePageForEpisodes(allEpisodes);
-  createSelectElementForEpisode(allEpisodes);
-  createSearchBar();
-  addTheShowSelectElement(getShows);
+  makePageForEpisodes(allEpisodes);    // make the page for all the episodes when the page is load
+  createSelectElementForEpisode(allEpisodes);    // create the select element when the page is load
+  createSearchBar();              // create a search bar function when the page is load
+  addTheShowSelectElement(getShows);      // create the select element for the Show element
 }
 
 /**********Minimal features level 100*********/
-// This create a div an display all the episode in the page- level 100
+// This create a div and display all the episode in the page- level 100
 function makePageForEpisodes(ListOfEpisodes) {
-  // For each episode in getAllEpisode() create a div and append it in the rootElement Container and have the class card
+  // For each episode in getAllEpisodes() create a div and append it in the rootElement Container and have the class card
   ListOfEpisodes.forEach((oneEpisode) => {
     let createContainer = document.createElement("div");
     rootElem.appendChild(createContainer);
@@ -55,6 +54,7 @@ function makePageForEpisodes(ListOfEpisodes) {
 /**********Add Search Bar level 200*********/
 
 // create a search bar functionality level 200(Add an Episode Selector)
+//-AccessInput is the input where the user would have to type the value the would like to search
 function createSearchBar() {
   let accessInput = document.querySelector(".input");
   accessInput.addEventListener("keyup", function (event) {
@@ -127,12 +127,12 @@ function addTheShowSelectElement(listOfShow) {
 
     accessTheShowSelectElement.appendChild(createOption);
   });
-   accessAPI(listOfShow);
+   //accessAPI(listOfShow);   
 }
 
 let accessShowSelector = document.getElementById("selectingShow");
 async function accessAPI(episodeNumber) {
-  fetch(`https://api.tvmaze.com/shows/82/episodes`)             // 82 is the id number found in the getAllShows array
+  fetch(`https://api.tvmaze.com/shows/${episodeNumber}/episodes`)             // 82 is the id number found in the getAllShows array
     .then((response) => {
       if (response.status >= 200 && response.status <= 299) {
         console.log(response.json());
@@ -143,14 +143,14 @@ async function accessAPI(episodeNumber) {
       }
     })
     .then((fetchEpisodes) => {
-      setup(fetchEpisodes);
+      makePageForEpisodes(fetchEpisodes);        // make the page of episodes for each selected show
     })
     .catch((err) => {
       console.log(err);
     });
-  accessShowSelector.addEventListener("change",  selectingEachShow); // here I am adding an event listener(change) that occur when the API is call
+  accessShowSelector.addEventListener("change",  selectingEachShow); // here I am adding an event listener(change) that occur when the users select different value from the dropdown list
 }
-accessAPI(getShows);         // I am calling the getShows variable that have the value of the getAllShow  assign to it
+//accessAPI(getShows);         // I am calling the getShows variable that have the value of the getAllShow  assign to it
 
 // function that would read the show's value that the users would select from the drowndown list
 function selectingEachShow(eachShow) {
@@ -162,7 +162,7 @@ function selectingEachShow(eachShow) {
   console.log(selectedEpisode);
   if (eachShow.target.options[eachShow.target.selectedIndex].index === 0){
     getShows.filter(epi =>{
-      makePageForEpisodes(epi);
+    setup(epi);
     })
   }
  
@@ -191,6 +191,7 @@ function selectingEachShow(eachShow) {
 //  let counterDisplay = document.querySelector('.display');
 //  counterDisplay.innerHTML = `Displaying ${numberOfMovies.length}/${allEpisodes.length} episodes`;
 // }
+
 
 // create the footer of the page
 let accessBody = document.getElementById("theBodyOfThePage");
