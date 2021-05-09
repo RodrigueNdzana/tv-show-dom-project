@@ -1,16 +1,18 @@
 //You can edit ALL of the code here
-// Global variable 
-const allEpisodes = getAllEpisodes(); // this is the defaut episode function to be display when the page it load 
-let getShows = getAllShows();     // This is the function that should be call (API) when we click the "select Show" with the id "selectingShow"
+// Global variable
+const allEpisodes = getAllEpisodes(); // this is the default episode function to be display when the page it load
+let getShows = getAllShows(); // This is the function that should be call (API) when we click the "select Show" with the id "selectingShow"
 let accessTheCount = document.getElementById("displayNumberOfEpisodes");
 const rootElem = document.getElementById("root");
+let accessTheCardDiv;
+let accessSelectElement = document.querySelector("#selectingSeries");
 
-// this is the function that would load my HTML page, 
+// this is the function that would load my HTML page,
 async function setup() {
-  makePageForEpisodes(allEpisodes);    // make the page for all the episodes when the page is load
-  createSelectElementForEpisode(allEpisodes);    // create the select element when the page is load
-  createSearchBar();              // create a search bar function when the page is load
-  addTheShowSelectElement(getShows);      // create the select element for the Show element
+  makePageForEpisodes(allEpisodes); // make the page for all the episodes when the page is load
+  createSelectElementForEpisode(allEpisodes); // create the select element when the page is load
+  createSearchBar(); // create a search bar function when the page is load
+  addTheShowSelectElement(getShows); // create the select element for the Show element
 }
 
 /**********Minimal features level 100*********/
@@ -58,7 +60,7 @@ function makePageForEpisodes(ListOfEpisodes) {
 function createSearchBar() {
   let accessInput = document.querySelector(".input");
   accessInput.addEventListener("keyup", function (event) {
-    let accessTheCardDiv = document.querySelectorAll("#root .card ");
+    accessTheCardDiv = document.querySelectorAll("#root .card ");
     let searchItems = event.target.value.toLowerCase();
     accessTheCardDiv.forEach(function (cardDiv) {
       // accessTheCount.innerHTML = `Displaying ${numberOfEpisodes}/${allEpisodes.length} episodes`;
@@ -75,7 +77,6 @@ function createSearchBar() {
 
 // create the select element functionality-level 300
 function createSelectElementForEpisode(episodes) {
-  let accessSelectElement = document.querySelector("#selectingSeries");
   let accessOption = document.getElementById("defaultSeries");
 
   episodes.forEach((el) => {
@@ -115,64 +116,73 @@ function createSelectElementForEpisode(episodes) {
   return accessSelectElement;
 }
 
-
 /**********Switch to fetching live data! level 350*********/
-
+// comparing each show and arranging then from Smaller to bigger
+function compare(lowerLetter, biggerLetter) {
+  if (lowerLetter.name.toLowerCase() < biggerLetter.name.toLowerCase()) {
+    return -1;
+  } else if (lowerLetter.name.toLowerCase() < biggerLetter.name.toLowerCase()) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
 ///create a select show
 function addTheShowSelectElement(listOfShow) {
   accessTheShowSelectElement = document.getElementById("selectingShow");
-  listOfShow.forEach((elementINShow) => {
+  listOfShow.sort(compare).forEach((elementINShow) => {
     let createOption = document.createElement("option");
     createOption.textContent = `${elementINShow.name}`;
 
     accessTheShowSelectElement.appendChild(createOption);
   });
-   //accessAPI(listOfShow);   
 }
 
 let accessShowSelector = document.getElementById("selectingShow");
-async function accessAPI(episodeNumber) {
-  fetch(`https://api.tvmaze.com/shows/${episodeNumber}/episodes`)             // 82 is the id number found in the getAllShows array
+function accessAPI(episodeNumber) {
+  fetch(`https://api.tvmaze.com/shows/${episodeNumber}/episodes`) // 82 is the id number found in the getAllShows array
     .then((response) => {
       if (response.status >= 200 && response.status <= 299) {
-        console.log(response.json());
+        return response.json();
       } else {
         throw new Error(
           `Whoops What Had you done ${response.status} ${response.statusText}`
         );
       }
     })
-    .then((fetchEpisodes) => {
-      makePageForEpisodes(fetchEpisodes);        // make the page of episodes for each selected show
+    .then((data) => {
+      makePageForEpisodes(data); // make the page of episodes for each selected show
+      createSelectElementForEpisode(data); // this update the select episode dropdown list with the value selected in the shows dropdown list.
     })
+
     .catch((err) => {
       console.log(err);
     });
-  accessShowSelector.addEventListener("change",  selectingEachShow); // here I am adding an event listener(change) that occur when the users select different value from the dropdown list
 }
+accessShowSelector.addEventListener("change", selectingEachShow); // here I am adding an event listener(change) that occur when the users select different value from the dropdown list
+
 //accessAPI(getShows);         // I am calling the getShows variable that have the value of the getAllShow  assign to it
 
 // function that would read the show's value that the users would select from the drowndown list
 function selectingEachShow(eachShow) {
-  console.log(eachShow.target.value);
-  const selectedShow = eachShow.target.value;
-  const selectedSeason = selectedShow.substring(0, selectedShow);
-  console.log(selectedSeason);
-  const selectedEpisode =selectedShow.substring(selectedShow + 1);
-  console.log(selectedEpisode);
-  if (eachShow.target.options[eachShow.target.selectedIndex].index === 0){
-    getShows.filter(epi =>{
-    setup(epi);
-    })
+  accessTheCardDiv = document.querySelectorAll("#root .card ");
+
+  let targetTheOptionId =
+    eachShow.target.options[eachShow.target.selectedIndex].value;
+
+  for (let i = 0; i < getShows.length; i++) {
+    if (targetTheOptionId == getShows[i].name) {
+      let showId = getShows[i].id;
+      window.onload = accessAPI(showId);
+      // console.log(setup());
+    } else if (rootElem !== null && accessSelectElement != null) {
+      rootElem.innerHTML = "";
+      accessSelectElement.innerHTML = "";
+      accessSelectElement.innerHTML = "<option>Select Episode</option>";
+    }
+   
   }
- 
-
- // makePageForEpisodes(getShows); // I am calling the makePageForEpisodes function that create the page for each episodes
 }
-
-
-
-  
 
 // const addCounter=()=>{
 //   let createCounterElement=document.createElement('div');
@@ -191,7 +201,6 @@ function selectingEachShow(eachShow) {
 //  let counterDisplay = document.querySelector('.display');
 //  counterDisplay.innerHTML = `Displaying ${numberOfMovies.length}/${allEpisodes.length} episodes`;
 // }
-
 
 // create the footer of the page
 let accessBody = document.getElementById("theBodyOfThePage");
